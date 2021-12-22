@@ -315,7 +315,7 @@ export default class Transfer extends Component {
             </span>
           </div>
           <FooterButton
-            disabled={this.state.isAmountError || !this.state.amount || !this.state.to}
+            disabled={this.state.isAmountError || !(this.state.amount && this.state.amount > 0) || !this.state.to }
             style={{ left: 0 }}
             onClick={this.handleSendButton}
             name={buttonText}
