@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import AccountPanel from '../account/account-panel';
 import './styles.css';
 
+import bgimgs from "../../images/tao_sy.svg"
+
 export default class Wallet extends Component {
   render() {
     const {
@@ -21,6 +23,7 @@ export default class Wallet extends Component {
     return (
       <div {...otherProps}>
         <AccountPanel
+          style={{backgroundImage:"url("+bgimgs+")"}}
           inputRef={inputRef}
           onAliasChange={onAliasChange}
           onAliasInputKeyPress={onAliasInputKeyPress}

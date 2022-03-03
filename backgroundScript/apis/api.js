@@ -97,6 +97,7 @@ const connect = (network) => {
 
 // call when network changes
 export const connectToApi = async (network) => {
+  console.log("connectApi ----->> ",network)
   const { networkFullUrl } = network;
   if (connection.isConnected) {
     if (connection.currentNetwork.networkFullUrl === networkFullUrl) {

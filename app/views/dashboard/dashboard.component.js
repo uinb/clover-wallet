@@ -10,6 +10,7 @@ import { findChainByName } from '../../../lib/constants/chain';
 import AddTokenIcon from '../../images/add_token_icon.svg';
 import { getCurrencyIcon } from '../../utils/dashboard';
 
+import bgimgs from "../../images/card_bg.png"
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +69,7 @@ export default class Dashboard extends Component {
       <div>
         <Wallet
           className="wallet-container"
+          style={{backgroundImage:"url("+bgimgs+")"}}
           inputRef={this.textInput}
           selectedAccount={account}
           assetsList={assetsList}

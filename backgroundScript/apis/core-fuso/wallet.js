@@ -3,7 +3,7 @@ import {
   Keyring, setSS58Format, encodeAddress, decodeAddress
 } from '@polkadot/keyring';
 import {
-  formatBalance, isHex, hexToU8a, u8aToHex, u8aToString,u8aWrapBytes
+  formatBalance, isHex, hexToU8a, u8aToHex, u8aToString,u8aWrapBytes,hexToString
 } from '@polkadot/util';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import { connectToApi,getApi } from '../api';
@@ -63,7 +63,8 @@ export const getTokenName = async (tokenId,network) => {
   const api = getApi();
   const data = await api.query.token.tokens(Number(tokenId));
   const tokenObj = JSON.parse(data.toString());
-  return tokenObj.symbol;
+  const symbol = hexToString(Object.values(tokenObj)[0][0]);
+  return symbol;
 }
 const getTokenBalance = async (address,tokenId,tokenName,api_) => {
   const api = api_;
@@ -95,7 +96,10 @@ const getTokenBalance = async (address,tokenId,tokenName,api_) => {
 export const getBalance = async address => {
   try {
     const api = getApi();
+    // console.log("api -- ",api)
     const { data } = await api.query.system.account(address);
+    // console.log("data -- ",data)
+
     const balance = data.free.toString();
     const reserved = data.reserved.toString();
     const decimals = ChainApi.getTokenDecimals();
@@ -134,8 +138,7 @@ export const getBalance = async address => {
     }
     return balanceObj;
   } catch (err) {
-    // const network = JSON.parse(localStorage.getItem("network"));
-    // await connectToApi(network);
+    console.log("500 isError ---> ",err)
     const balanceObj = {
       address,
       tokens: [
@@ -147,6 +150,7 @@ export const getBalance = async address => {
           taoTotal:"--",
           marketData: '0',
           balanceFormatted: formatBalance('0', true, 18),
+          isconnect:false
         },
       ],
       status: FAILURE,
@@ -191,7 +195,7 @@ function thousands(num){
 const toolNumber = (param) => {
 	let strParam = String(param)
 	let flag = /e/.test(strParam)
-	if (!flag) return param
+	if (!flag) return String(param)
   
 	// 指数符号 true: 正，false: 负
 	let sysbol = true
